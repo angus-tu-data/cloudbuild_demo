@@ -1,1 +1,1 @@
-feature A
+feature B
