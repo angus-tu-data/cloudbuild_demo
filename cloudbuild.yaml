@@ -30,3 +30,6 @@ steps:
     - |
       echo "Deploy step (example)"
       # gcloud app deploy --quiet
+
+options:
+  logging: CLOUD_LOGGING_ONLY
