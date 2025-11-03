@@ -2,15 +2,14 @@ steps:
 # 1. Install test dependencies & run unit tests
 - name: 'python:3.10'
   entrypoint: 'bash'
-  dir: 'cloudrun_demo'
   env:
     - PYTHONPATH=cloudrun_demo
   args:
     - '-c'
     - |
-      pip install -r requirements.txt
+      pip install -r cloudrun_demo/requirements.txt
       pip install pytest
-      pytest tests/
+      pytest cloudrun_demo/tests/
 
 # 2. Build the Docker image and push it to Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
