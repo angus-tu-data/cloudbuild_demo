@@ -17,5 +17,4 @@ COPY app/ ./app
 WORKDIR /app
 
 # 入口點
-EXPOSE 8080
 CMD ["python", "main.py"]
