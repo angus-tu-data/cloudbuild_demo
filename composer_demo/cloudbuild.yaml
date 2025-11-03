@@ -1,0 +1,40 @@
+steps:
+
+# Step 0: Install test dependencies
+- name: 'python:3.10' 
+  entrypoint: 'bash' 
+  dir: 'composer_demo' 
+  args: 
+    - '-c' 
+    - | 
+      pip install -r requirements.txt
+
+# Step 1: Upload DAG to Composer bucket
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: 'bash'
+  dir: 'composer_demo' 
+  args:
+    - '-c'
+    - |
+      echo "Deploying DAGs to Composer..."
+      COMPOSER_BUCKET=${_COMPOSER_BUCKET}
+      DAG_SOURCE_DIR=dags/
+      gsutil -m cp -r $DAG_SOURCE_DIR* gs://$COMPOSER_BUCKET/dags/
+
+# Step 2: Check DAG Python code
+- name: 'python:3.10'
+  entrypoint: 'bash'
+  dir: 'composer_demo' 
+  args:
+    - '-c'
+    - |
+      echo "Checking DAG syntax..."
+      for f in dags/*.py; do
+        python -m py_compile $f
+      done
+
+substitutions:
+  _COMPOSER_BUCKET: 'asia-east1-composer-cicd-de-91d1c939-bucket'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
