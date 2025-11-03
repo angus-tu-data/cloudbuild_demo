@@ -2,6 +2,7 @@ steps:
 # 1. Install test dependencies & run unit tests
 - name: 'python:3.10'
   entrypoint: 'bash'
+  dir: 'cloudrun_demo'
   args:
     - '-c'
     - |
