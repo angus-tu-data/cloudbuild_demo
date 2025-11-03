@@ -1,0 +1,32 @@
+steps:
+# 1. Install test dependencies & run unit tests
+- name: 'python:3.10'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      pip install -r requirements.txt
+      pip install pytest
+      pytest tests/
+
+# 2. Build the Docker image and push it to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA', '.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA']
+
+# 3. Deploy to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      gcloud run deploy cloudrun-app \
+        --image asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA \
+        --asia-east1 asia-east1 \
+        --platform managed \
+        --allow-unauthenticated
+
+images:
+  - 'asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA'
