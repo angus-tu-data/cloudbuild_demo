@@ -2,14 +2,13 @@ steps:
 # 1. Install test dependencies & run unit tests
 - name: 'python:3.10'
   entrypoint: 'bash'
-  env:
-    - PYTHONPATH=cloudrun_demo
+  dir: 'cloudrun_demo'
   args:
     - '-c'
     - |
-      pip install -r cloudrun_demo/requirements.txt
+      pip install -r requirements.txt
       pip install pytest
-      pytest cloudrun_demo/tests/
+      pytest tests/
 
 # 2. Build the Docker image and push it to Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
@@ -29,7 +28,7 @@ steps:
     - |
       gcloud run deploy cloudrun-app \
         --image asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA \
-        --asia-east1 asia-east1 \
+        --region asia-east1 \
         --platform managed \
         --allow-unauthenticated
 
