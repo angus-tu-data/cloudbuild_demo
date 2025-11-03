@@ -17,8 +17,7 @@ steps:
     - '-c'
     - |
       echo "Deploying DAGs to Composer..."
-      COMPOSER_BUCKET=${_COMPOSER_BUCKET}
-      gsutil -m cp -r dags/* gs://$COMPOSER_BUCKET/dags/
+      gsutil -m cp -r dags/* gs://${_COMPOSER_BUCKET}/dags/
 
 # Step 2: Check DAG Python code
 - name: 'python:3.10'
