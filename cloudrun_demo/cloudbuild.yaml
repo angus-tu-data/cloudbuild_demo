@@ -30,7 +30,8 @@ steps:
         --image asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA \
         --region asia-east1 \
         --platform managed \
-        --allow-unauthenticated
+        --allow-unauthenticated \
+        --timeout 300s
 
 images:
   - 'asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA'
