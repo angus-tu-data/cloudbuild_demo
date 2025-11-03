@@ -13,8 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 複製程式碼
 COPY app/ ./app
 
-# 設定工作目錄
-WORKDIR /app
-
 # 入口點
-CMD ["python", "main.py"]
+CMD ["python", "app/main.py"]
