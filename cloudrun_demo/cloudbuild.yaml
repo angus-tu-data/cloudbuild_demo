@@ -2,10 +2,11 @@ steps:
 # 1. Install test dependencies & run unit tests
 - name: 'python:3.10'
   entrypoint: 'bash'
+  env:
+    - PYTHONPATH=cloudrun_demo
   args:
     - '-c'
     - |
-      export PYTHONPATH=$PYTHONPATH:cloudrun_demo
       pip install -r cloudrun_demo/requirements.txt
       pip install pytest
       pytest cloudrun_demo/tests/
