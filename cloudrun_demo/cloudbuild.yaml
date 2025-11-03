@@ -30,3 +30,6 @@ steps:
 
 images:
   - 'asia-east1-docker.pkg.dev/tw-rd-data-angus-tu/cloudrun-repo/cloudrun-app:$SHORT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
