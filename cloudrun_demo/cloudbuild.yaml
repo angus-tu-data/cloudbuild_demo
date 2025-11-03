@@ -5,6 +5,7 @@ steps:
   args:
     - '-c'
     - |
+      export PYTHONPATH=$PYTHONPATH:cloudrun_demo
       pip install -r cloudrun_demo/requirements.txt
       pip install pytest
       pytest cloudrun_demo/tests/
