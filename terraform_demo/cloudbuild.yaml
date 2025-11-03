@@ -1,12 +1,31 @@
+# cloudbuild.yaml
 steps:
+  # Step 1: 初始化 Terraform
   - name: hashicorp/terraform:light
     entrypoint: sh
     args:
       - -c
       - |
+        echo "Initializing Terraform..."
         terraform init
-        terraform plan
-        terraform apply -auto-approve
+
+  # Step 2: 查看 Terraform 計畫
+  - name: hashicorp/terraform:light
+    entrypoint: sh
+    args:
+      - -c
+      - |
+        echo "Planning Terraform changes..."
+        terraform plan -var-file="terraform.tfvars"
+
+  # Step 3: 套用 Terraform 配置
+  - name: hashicorp/terraform:light
+    entrypoint: sh
+    args:
+      - -c
+      - |
+        echo "Applying Terraform changes..."
+        terraform apply -var-file="terraform.tfvars" -auto-approve
 
 options:
   logging: CLOUD_LOGGING_ONLY
